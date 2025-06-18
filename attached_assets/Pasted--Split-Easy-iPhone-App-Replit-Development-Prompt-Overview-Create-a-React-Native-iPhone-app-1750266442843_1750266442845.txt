@@ -1,0 +1,178 @@
+# Split Easy iPhone App - Replit Development Prompt
+
+## Overview
+Create a React Native iPhone app called "Split Easy" for expense sharing among friends during trips, vacations, and group activities. The app should be simple, intuitive, and mobile-optimized with a clean, modern design.
+
+## Core Functionality
+
+### 1. Friend Management
+- Add friends to the group (starting with "You" as default)
+- Remove friends from the group (except "You")
+- Display all friends in a clean list format
+- Prevent duplicate friend names
+
+### 2. Expense Tracking
+- Add expenses with:
+  - Description (e.g., "Gas for road trip", "Dinner at restaurant")
+  - Amount (numeric input)
+  - Who paid (dropdown selection from friends list)
+- Display all expenses in a scrollable list
+- Allow removal of individual expenses
+- Show payer name and amount for each expense
+
+### 3. Settlement Calculation
+- Calculate total expenses automatically
+- Determine per-person share (total ÷ number of friends)
+- Calculate who owes money and who should receive money
+- Minimize number of transfers needed for settlement
+- Show settlement details in expandable section
+
+## Design Requirements
+
+### Visual Design
+- **Color Scheme:**
+  - Primary: Indigo/Blue gradient background (#EBF4FF to #E0E7FF)
+  - Accent colors: Green for money (#059669), Blue for totals (#2563EB), Purple for settlements (#7C3AED)
+  - Background: White cards with subtle shadows
+  - Text: Dark gray (#374151) for primary, lighter gray (#6B7280) for secondary
+
+### Layout Structure
+- **Header:** App title "Split Easy" with tagline
+- **Two-column grid on larger screens, single column on mobile:**
+  - Left: Friends management section
+  - Right: Add expense section
+- **Full-width sections below:**
+  - Expenses list (when expenses exist)
+  - Settlement summary with statistics cards
+  - Settlement details (expandable)
+
+### UI Components
+- **Cards:** White background, rounded corners, drop shadows
+- **Buttons:** Rounded, colored backgrounds with hover effects
+- **Inputs:** Border styling, focus states with colored borders
+- **Icons:** Use React Native Vector Icons (Ionicons)
+  - Users icon for friends section
+  - Dollar sign for expenses
+  - Calculator for settlement
+  - Plus for adding items
+  - Trash for removing items
+  - Checkmark for settlements
+
+## Technical Implementation
+
+### React Native Setup
+```bash
+# Use React Native template in Replit
+npx react-native init SplitEasy
+```
+
+### Required Dependencies
+```json
+{
+  "react-native-vector-icons": "^10.0.0",
+  "react-native-elements": "^3.4.3",
+  "react-native-paper": "^5.10.0"
+}
+```
+
+### State Management Structure
+```javascript
+const [friends, setFriends] = useState(['You']);
+const [expenses, setExpenses] = useState([]);
+const [newFriend, setNewFriend] = useState('');
+const [newExpense, setNewExpense] = useState({
+  description: '',
+  amount: '',
+  paidBy: 'You'
+});
+const [showSettlement, setShowSettlement] = useState(false);
+```
+
+### Key Functions to Implement
+1. **addFriend()** - Add new friend to list
+2. **removeFriend()** - Remove friend and their associated expenses
+3. **addExpense()** - Add new expense with validation
+4. **removeExpense()** - Remove specific expense
+5. **calculateSettlement()** - Complex calculation for optimal money transfers
+
+## Settlement Algorithm
+The app should calculate the most efficient way to settle debts:
+1. Calculate how much each person paid vs. their fair share
+2. Identify who owes money (negative balance) and who should receive money (positive balance)
+3. Match debtors with creditors to minimize number of transactions
+4. Return array of settlement instructions
+
+## Sample Data for Testing
+```javascript
+// Include this sample data to demonstrate the app
+const sampleFriends = ['You', 'Sarah', 'Mike', 'Emma'];
+const sampleExpenses = [
+  { id: 1, description: 'Gas for road trip', amount: 80, paidBy: 'You' },
+  { id: 2, description: 'Dinner at restaurant', amount: 120, paidBy: 'Sarah' },
+  { id: 3, description: 'Hotel booking', amount: 200, paidBy: 'Mike' },
+  { id: 4, description: 'Groceries for camping', amount: 60, paidBy: 'Emma' },
+  { id: 5, description: 'Breakfast spot', amount: 40, paidBy: 'You' }
+];
+```
+
+## Mobile-Specific Features
+- **Touch-friendly:** Large tap targets, appropriate spacing
+- **Responsive:** Adapts to different iPhone screen sizes
+- **Keyboard handling:** Dismiss keyboard when appropriate
+- **ScrollView:** Handle long lists of friends/expenses
+- **SafeAreaView:** Proper handling of iPhone notch and safe areas
+- **Platform-specific styling:** iOS-appropriate fonts and spacing
+
+## User Experience Requirements
+- **Intuitive flow:** Add friends → Add expenses → View settlement
+- **Clear visual hierarchy:** Important information stands out
+- **Immediate feedback:** Actions provide instant visual response
+- **Error prevention:** Validate inputs, prevent duplicate friends
+- **Empty states:** Show helpful messages when no data exists
+- **Loading states:** If calculations take time, show loading indicators
+
+## Additional Features to Include
+- **Clear all data:** Reset button for new trips
+- **Export functionality:** Share settlement summary
+- **Offline capability:** Work without internet connection
+- **Data persistence:** Save data between app sessions using AsyncStorage
+
+## File Structure
+```
+SplitEasy/
+├── App.js (main component)
+├── components/
+│   ├── FriendsSection.js
+│   ├── ExpenseSection.js
+│   ├── ExpensesList.js
+│   └── SettlementSection.js
+├── utils/
+│   └── calculations.js (settlement logic)
+└── styles/
+    └── styles.js (StyleSheet definitions)
+```
+
+## Testing Instructions
+1. Start with adding 3-4 friends
+2. Add various expenses with different people paying
+3. Verify calculations are correct
+4. Test edge cases (equal split, one person pays everything)
+5. Test UI responsiveness on different screen sizes
+6. Verify data persistence works correctly
+
+## Success Criteria
+- App launches without errors
+- All core functionality works as described
+- UI matches the design specifications
+- Calculations are mathematically correct
+- App is intuitive for non-technical users
+- Smooth performance on iPhone devices
+
+## Deployment Notes
+- Ensure all React Native dependencies are properly linked
+- Test on iOS simulator in Replit
+- Verify touch interactions work properly
+- Check that the app handles various screen orientations
+- Confirm all icons and styling render correctly
+
+Build this app to be production-ready with clean, maintainable code and excellent user experience.
